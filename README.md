@@ -74,3 +74,14 @@ externalNativeBuild {
 }
 ```
 
+# BUGS
+
+1. 在Android x86平台内嵌汇编的时候，会提示`shared library text segment is not shareable`，加了`-Wl,--no-warn-shared-textrel`在link动态库的时候也会失败
+
+现在walkaround的方法就是全代码编译, 现在Android x86
+
+2. `ghash-armv4.S`的宏要去掉
+
+
+
+
