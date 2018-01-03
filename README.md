@@ -54,7 +54,7 @@ cd openssl
 
 如果是其他平台就像普通CMake一样用
 
-需要继承汇编代码就加 `-DWithOpenSSLASM:BOOL=TRUE`
+需要继承汇编代码就加 `-DWithOpenSSLASM:BOOL=ON`
 
 ```groovy
 defaultConfig {
