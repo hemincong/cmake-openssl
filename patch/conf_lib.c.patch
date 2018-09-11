@@ -1,0 +1,17 @@
+--- crypto/conf/conf_lib.c	2018-03-27 21:54:46.000000000 +0800
++++ crypto/conf/conf_lib.c	2018-07-05 14:55:12.000000000 +0800
+@@ -95,12 +95,13 @@
+ {
+     LHASH_OF(CONF_VALUE) *ltmp;
+     BIO *in = NULL;
+-
++#ifndef OPENSSL_NO_FP_API
+ #ifdef OPENSSL_SYS_VMS
+     in = BIO_new_file(file, "r");
+ #else
+     in = BIO_new_file(file, "rb");
+ #endif
++#endif
+     if (in == NULL) {
+         CONFerr(CONF_F_CONF_LOAD, ERR_R_SYS_LIB);
+         return NULL;

@@ -1,0 +1,13 @@
+--- ssl/ssl_cert.c	2018-03-27 21:54:46.000000000 +0800
++++ ssl/ssl_cert.c	2018-07-05 17:51:29.000000000 +0800
+@@ -950,8 +950,9 @@
+     int (*oldcmp) (const X509_NAME *const *a, const X509_NAME *const *b);
+ 
+     oldcmp = sk_X509_NAME_set_cmp_func(stack, xname_cmp);
+-
++#ifndef OPENSSL_NO_FP_API
+     in = BIO_new(BIO_s_file_internal());
++#endif
+ 
+     if (in == NULL) {
+         SSLerr(SSL_F_SSL_ADD_FILE_CERT_SUBJECTS_TO_STACK,

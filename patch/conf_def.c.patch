@@ -1,0 +1,17 @@
+--- crypto/conf/conf_def.c	2018-03-27 21:54:46.000000000 +0800
++++ crypto/conf/conf_def.c	2018-07-05 14:52:23.000000000 +0800
+@@ -190,12 +190,13 @@
+ {
+     int ret;
+     BIO *in = NULL;
+-
++#ifndef OPENSSL_NO_FP_API
+ #ifdef OPENSSL_SYS_VMS
+     in = BIO_new_file(name, "r");
+ #else
+     in = BIO_new_file(name, "rb");
+ #endif
++#endif
+     if (in == NULL) {
+         if (ERR_GET_REASON(ERR_peek_last_error()) == BIO_R_NO_SUCH_FILE)
+             CONFerr(CONF_F_DEF_LOAD, CONF_R_NO_SUCH_FILE);

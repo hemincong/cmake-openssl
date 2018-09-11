@@ -1,0 +1,13 @@
+--- crypto/des/des_old.h	2018-03-27 21:54:46.000000000 +0800
++++ crypto/des/des_old.h	2018-07-05 17:57:54.000000000 +0800
+@@ -490,8 +490,9 @@
+ #ifdef  __cplusplus
+ }
+ #endif
+-
++#ifndef OPENSSL_NO_UI
+ /* for DES_read_pw_string et al */
+ # include <openssl/ui_compat.h>
++#endif
+ 
+ #endif

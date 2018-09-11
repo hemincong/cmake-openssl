@@ -1,0 +1,24 @@
+--- crypto/cryptlib.c	2018-03-27 21:54:46.000000000 +0800
++++ crypto/cryptlib.c	2018-07-05 15:30:37.000000000 +0800
+@@ -990,7 +990,9 @@
+     va_list ap;
+ 
+     va_start(ap, fmta);
++#ifndef OPENSSL_NO_STDIO
+     vfprintf(stderr, fmta, ap);
++#endif
+     va_end(ap);
+ }
+ 
+@@ -1020,7 +1022,11 @@
+ 
+ void *OPENSSL_stderr(void)
+ {
++#ifndef OPENSSL_NO_STDIO
+     return stderr;
++#else
++    return NULL;
++#endif
+ }
+ 
+ int CRYPTO_memcmp(const volatile void *in_a, const volatile void *in_b, size_t len)

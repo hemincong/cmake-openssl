@@ -1,0 +1,41 @@
+--- crypto/des/read2pwd.c	2018-03-27 21:54:46.000000000 +0800
++++ crypto/des/read2pwd.c	2018-07-06 11:45:26.000000000 +0800
+@@ -111,30 +111,36 @@
+ 
+ #include <string.h>
+ #include <openssl/des.h>
++#ifndef OPENSSL_NO_UI
+ #include <openssl/ui.h>
++#endif
+ #include <openssl/crypto.h>
+ 
+ int DES_read_password(DES_cblock *key, const char *prompt, int verify)
+ {
+-    int ok;
++    int ok = -1;
++#ifndef OPENSSL_NO_UI
+     char buf[BUFSIZ], buff[BUFSIZ];
+ 
+     if ((ok = UI_UTIL_read_pw(buf, buff, BUFSIZ, prompt, verify)) == 0)
+         DES_string_to_key(buf, key);
+     OPENSSL_cleanse(buf, BUFSIZ);
+     OPENSSL_cleanse(buff, BUFSIZ);
++#endif
+     return (ok);
+ }
+ 
+ int DES_read_2passwords(DES_cblock *key1, DES_cblock *key2,
+                         const char *prompt, int verify)
+ {
+-    int ok;
++    int ok = -1;
++#ifndef OPENSSL_NO_UI
+     char buf[BUFSIZ], buff[BUFSIZ];
+ 
+     if ((ok = UI_UTIL_read_pw(buf, buff, BUFSIZ, prompt, verify)) == 0)
+         DES_string_to_2keys(buf, key1, key2);
+     OPENSSL_cleanse(buf, BUFSIZ);
+     OPENSSL_cleanse(buff, BUFSIZ);
++#endif
+     return (ok);
+ }

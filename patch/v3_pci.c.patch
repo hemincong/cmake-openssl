@@ -1,0 +1,14 @@
+--- crypto/x509v3/v3_pci.c	2018-03-27 21:54:46.000000000 +0800
++++ crypto/x509v3/v3_pci.c	2018-07-05 18:08:49.000000000 +0800
+@@ -152,7 +152,10 @@
+         } else if (strncmp(val->value, "file:", 5) == 0) {
+             unsigned char buf[2048];
+             int n;
+-            BIO *b = BIO_new_file(val->value + 5, "r");
++            BIO *b = NULL;
++#ifndef OPENSSL_NO_FP_API
++            b = BIO_new_file(val->value + 5, "r");
++#endif
+             if (!b) {
+                 X509V3err(X509V3_F_PROCESS_PCI_VALUE, ERR_R_BIO_LIB);
+                 X509V3_conf_err(val);

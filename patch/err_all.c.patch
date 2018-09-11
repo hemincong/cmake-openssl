@@ -1,0 +1,22 @@
+--- crypto/err/err_all.c	2018-03-27 21:54:46.000000000 +0800
++++ crypto/err/err_all.c	2018-07-05 18:02:20.000000000 +0800
+@@ -94,7 +94,9 @@
+ #ifndef OPENSSL_NO_ENGINE
+ # include <openssl/engine.h>
+ #endif
++#ifndef OPENSSL_NO_UI
+ #include <openssl/ui.h>
++#endif
+ #include <openssl/ocsp.h>
+ #include <openssl/err.h>
+ #ifdef OPENSSL_FIPS
+@@ -154,7 +156,9 @@
+     ERR_load_ENGINE_strings();
+ # endif
+     ERR_load_OCSP_strings();
++#ifndef OPENSSL_NO_UI
+     ERR_load_UI_strings();
++#endif
+ # ifdef OPENSSL_FIPS
+     ERR_load_FIPS_strings();
+ # endif

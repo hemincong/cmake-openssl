@@ -1,0 +1,28 @@
+--- crypto/evp/evp_key.c	2018-03-27 21:54:46.000000000 +0800
++++ crypto/evp/evp_key.c	2018-07-06 12:09:14.000000000 +0800
+@@ -61,7 +61,9 @@
+ #include <openssl/x509.h>
+ #include <openssl/objects.h>
+ #include <openssl/evp.h>
++#ifndef OPENSSL_NO_UI
+ #include <openssl/ui.h>
++#endif
+ 
+ /* should be init to zeros. */
+ static char prompt_string[80];
+@@ -98,6 +100,7 @@
+                            int verify)
+ {
+     int ret = -1;
++#ifndef OPENSSL_NO_UI
+     char buff[BUFSIZ];
+     UI *ui;
+ 
+@@ -117,6 +120,7 @@
+     OPENSSL_cleanse(buff, BUFSIZ);
+  end:
+     UI_free(ui);
++#endif
+     return ret;
+ }
+ 

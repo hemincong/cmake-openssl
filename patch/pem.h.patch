@@ -1,0 +1,53 @@
+--- crypto/pem/pem.h	2018-03-27 21:54:46.000000000 +0800
++++ crypto/pem/pem.h	2018-07-05 14:50:05.000000000 +0800
+@@ -324,6 +324,7 @@
+ 
+ #  define DECLARE_PEM_read_fp(name, type) /**/
+ #  define DECLARE_PEM_write_fp(name, type) /**/
++#  define DECLARE_PEM_write_fp_const(name, type) /**/
+ #  define DECLARE_PEM_write_cb_fp(name, type) /**/
+ # else
+ 
+@@ -416,7 +417,7 @@
+                             unsigned char *kstr, int klen,
+                             pem_password_cb *cd, void *u);
+ # endif
+-
++#ifndef OPENSSL_NO_FP_API
+ int PEM_read(FILE *fp, char **name, char **header,
+              unsigned char **data, long *len);
+ int PEM_write(FILE *fp, const char *name, const char *hdr,
+@@ -428,6 +429,7 @@
+                    int klen, pem_password_cb *callback, void *u);
+ STACK_OF(X509_INFO) *PEM_X509_INFO_read(FILE *fp, STACK_OF(X509_INFO) *sk,
+                                         pem_password_cb *cb, void *u);
++#endif
+ 
+ int PEM_SealInit(PEM_ENCODE_SEAL_CTX *ctx, EVP_CIPHER *type,
+                  EVP_MD *md_type, unsigned char **ek, int *ekl,
+@@ -493,7 +495,7 @@
+                                 pem_password_cb *cb, void *u);
+ EVP_PKEY *d2i_PKCS8PrivateKey_bio(BIO *bp, EVP_PKEY **x, pem_password_cb *cb,
+                                   void *u);
+-
++#ifndef OPENSSL_NO_FP_API
+ int i2d_PKCS8PrivateKey_fp(FILE *fp, EVP_PKEY *x, const EVP_CIPHER *enc,
+                            char *kstr, int klen,
+                            pem_password_cb *cb, void *u);
+@@ -504,13 +506,15 @@
+                                   char *kstr, int klen,
+                                   pem_password_cb *cb, void *u);
+ 
++
+ EVP_PKEY *d2i_PKCS8PrivateKey_fp(FILE *fp, EVP_PKEY **x, pem_password_cb *cb,
+                                  void *u);
+ 
+ int PEM_write_PKCS8PrivateKey(FILE *fp, EVP_PKEY *x, const EVP_CIPHER *enc,
+                               char *kstr, int klen, pem_password_cb *cd,
+                               void *u);
+-
++#endif
++    
+ EVP_PKEY *PEM_read_bio_Parameters(BIO *bp, EVP_PKEY **x);
+ int PEM_write_bio_Parameters(BIO *bp, EVP_PKEY *x);
+ 

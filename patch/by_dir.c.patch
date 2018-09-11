@@ -1,0 +1,17 @@
+--- crypto/x509/by_dir.c	2018-03-27 21:54:46.000000000 +0800
++++ crypto/x509/by_dir.c	2018-07-05 14:46:40.000000000 +0800
+@@ -364,10 +364,14 @@
+ #endif
+             /* found one. */
+             if (type == X509_LU_X509) {
++#ifndef OPENSSL_NO_STDIO
+                 if ((X509_load_cert_file(xl, b->data, ent->dir_type)) == 0)
++#endif
+                     break;
+             } else if (type == X509_LU_CRL) {
++#ifndef OPENSSL_NO_STDIO
+                 if ((X509_load_crl_file(xl, b->data, ent->dir_type)) == 0)
++#endif
+                     break;
+             }
+             /* else case will caught higher up */
